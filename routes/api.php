@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\app\AuthController;
+use App\Http\Controllers\app\CashierController;
 
 Route::get('/user', function (Request $request) {
     return response()->json([
@@ -18,10 +19,7 @@ Route::post('/register', [AuthController::class, 'register'])->middleware(['auth
 
 
 Route::middleware(['auth:sanctum', 'ability:superadmin,admin,cashier'])->group(function () {
-  Route::get('/hallo', function () {
-    return response()->json([
-      'message' => 'Hello World'
-    ]);
-  });
+  Route::get('/category', [CashierController::class, 'getCategory']);
+  Route::get('/menu', [CashierController::class, 'getMenu']);
 });
 

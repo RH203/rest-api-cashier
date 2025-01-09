@@ -16,7 +16,6 @@ return new class extends Migration
       $table->integer('quantity');
       $table->integer('subtotal');
       $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-      $table->foreignId('categories_id')->constrained('categories')->onDelete('cascade');
       $table->timestamps();
       $table->softDeletes();
     });
@@ -30,3 +29,4 @@ return new class extends Migration
     Schema::dropIfExists('orders_detail');
   }
 };
+

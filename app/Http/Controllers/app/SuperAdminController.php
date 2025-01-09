@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\app;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Controllers\base\BaseController;
 
-class SuperAdminController extends Controller
+class SuperAdminController extends BaseController
 {
     //
 }

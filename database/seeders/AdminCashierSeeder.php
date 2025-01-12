@@ -16,7 +16,8 @@ class AdminCashierSeeder extends Seeder
     {
       User::create([
         'name'=> 'admin',
-        'password' => Hash::make('password')
+        'password' => Hash::make('password'),
+        'role'=> 'admin',
       ]);
     }
 }

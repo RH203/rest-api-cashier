@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id()->primary()->autoIncrement();
             $table->string('name', 255)->unique();
             $table->string('password');
-            $table->enum('role', ['superadmin', 'admin', 'cashier'])->default('cashier');
+            $table->enum('role', ['admin', 'cashier'])->default('cashier');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -14,8 +14,15 @@ class AccountCashierSeeder extends Seeder
      */
     public function run(): void
     {
+      // Cashier 1
       User::create([
         'name'=> 'cashier',
+        'password' => Hash::make('password')
+      ]);
+
+      // Cashier 2
+      User::create([
+        'name'=> 'cashier2',
         'password' => Hash::make('password')
       ]);
     }

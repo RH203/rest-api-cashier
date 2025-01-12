@@ -21,10 +21,12 @@ class AuthController extends BaseController
 
       $data = User::where('name', $validated['name'])->first();
 
-      if (!$data || !Hash::check($validated['password'], $data->password)) {
+      if (!$data || $data->deleted_at != null || !Hash::check($validated['password'], $data->password)) {
 
         return $this->error(null, 'Unauthorized', 401);
       }
+
+      $data->tokens()->delete();
 
       $token = $data->createToken($request->name, [$data->role]);
       $data->remember_token = $token->plainTextToken;
@@ -44,7 +46,7 @@ class AuthController extends BaseController
       $validated = $request->validate([
         'name' => 'required|string',
         'password' => 'required|string',
-       'role' => 'required|string|in:cashier,admin,superadmin',
+        'role' => 'required|string|in:cashier,admin',
       ]);
 
       $data = User::where('name', $validated['name'])->first();
@@ -59,6 +61,24 @@ class AuthController extends BaseController
 
       return $this->success("Successfully registered");
     } catch (\Exception $exception) {
+      return $this->error($exception->getMessage());
+    }
+  }
+
+  public function logout(Request $request)
+  {
+    try {
+      $validated = request()->validate([
+        'id' => 'requred|integer'
+      ]);
+
+      $data = User::find($validated['id']);
+
+      $data->tokens()->where('id', $validated['id'])->delete();
+
+      return $this->success("Successfully logged out");
+
+    }catch (AuthenticationException $exception) {
       return $this->error($exception->getMessage());
     }
   }

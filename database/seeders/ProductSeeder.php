@@ -23,6 +23,7 @@ class ProductSeeder extends Seeder
         'name' => $faker->foodName(),
         'category_id' => $categories->where('name', 'Food')->first()->id,
         'price' => $faker->randomFloat(2, 5000, 30000),
+        'image' => 'download.jpeg',
         'stock' => $faker->numberBetween(10, 100),
       ]);
 
@@ -31,6 +32,7 @@ class ProductSeeder extends Seeder
         'name' => $faker->beverageName(),
         'category_id' => $categories->where('name', 'Drink')->first()->id,
         'price' => $faker->randomFloat(2, 2000, 15000),
+        'image' => 'download.jpeg',
         'stock' => $faker->numberBetween(10, 100),
       ]);
 
@@ -39,6 +41,7 @@ class ProductSeeder extends Seeder
         'name' => $faker->dairyName(),
         'category_id' => $categories->where('name', 'Desert')->first()->id,
         'price' => $faker->randomFloat(2, 3000, 15000),
+        'image' => 'download.jpeg',
         'stock' => $faker->numberBetween(10, 100),
       ]);
     }

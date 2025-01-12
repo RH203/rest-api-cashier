@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categories;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,9 +13,9 @@ class DatabaseSeeder extends Seeder
   {
     $this->call(AccountCashierSeeder::class);
     $this->call(AdminCashierSeeder::class);
-    $this->call(SuperAdminCashierSeeder::class);
     $this->call(CategoriesSeeder::class);
     $this->call(ProductSeeder::class);
+    $this->call(TableSeeder::class);
 
   }
 }

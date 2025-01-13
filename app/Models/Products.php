@@ -11,7 +11,7 @@ class Products extends Model
 
   use HasFactory;
 
-  protected $fillable = ['name', 'price', 'stock', 'category_id'];
+  protected $fillable = ['name', 'price', 'category_id'];
   public function orders_detail(): HasMany
   {
     return $this->hasMany(OrdersDetail::class);

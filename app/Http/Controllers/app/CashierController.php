@@ -56,6 +56,8 @@ class CashierController extends BaseController
   {
     try {
       $orderNumber = 'ORD-' . now()->format('YmdHis');
+
+
     } catch (\Exception $e) {
       // Handle exception
     }

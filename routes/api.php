@@ -34,7 +34,7 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
 /**
  * Cashier route
  */
-Route::middleware(['auth:sanctum', 'ability:cashier,admin'])->group(function () {
+Route::middleware(['web', 'auth:sanctum', 'ability:cashier,admin'])->group(function () {
   Route::get('/category', [CashierController::class, 'getCategory']);
   Route::get('/menu', [CashierController::class, 'getMenu']);
   Route::get('/logout', [AuthController::class, 'logout']);

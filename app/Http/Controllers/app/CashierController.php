@@ -37,7 +37,7 @@ class CashierController extends BaseController
       $data = Products::with(['category' => function ($query) {
         $query->select('id', 'name');
       }])
-        ->select('id', 'name', 'category_id', 'price', 'stock')
+        ->select('id', 'name', 'category_id', 'price')
         ->get();
 
       return $this->success($data);

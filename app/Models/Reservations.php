@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservations extends Model
 {
+
+  protected $fillable = ['contact_person', 'number_of_people', 'reservation_time', 'user_id', 'table_id'];
+
   public function users()
   {
     return $this->belongsTo(User::class);

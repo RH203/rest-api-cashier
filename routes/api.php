@@ -40,4 +40,5 @@ Route::middleware(['auth:sanctum', 'ability:cashier,admin'])->group(function () 
   Route::get('/logout', [AuthController::class, 'logout']);
   Route::get('/show-table', [CashierController::class, 'showTable']);
   Route::post('/create-reservation', [CashierController::class, 'createReservation']);
+  Route::post('/create-order', [CashierController::class, 'createOrder']);
 });

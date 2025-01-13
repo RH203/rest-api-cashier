@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
           $table->id()->autoIncrement()->primary();
-          $table->integer('order_number');
+          $table->string('order_number');
           $table->integer('total_price');
           $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
           $table->timestamps();

@@ -12,15 +12,6 @@ use App\Http\Controllers\app\AdminController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register'])->middleware(['auth:sanctum', 'ability:superadmin']);
 
-/**
- * Public route
- */
-Route::middleware(['auth:sanctum', 'ability:admin,cashier'])->group(function () {
-  Route::get('/category', [CashierController::class, 'getCategory']);
-  Route::get('/menu', [CashierController::class, 'getMenu']);
-  Route::get('/logout', [AuthController::class, 'logout']);
-  Route::get('/show-table', [CashierController::class, 'showTable']);
-});
 
 /**
  * Admin route
@@ -43,6 +34,11 @@ Route::middleware(['auth:sanctum', 'abilities:admin'])->group(function () {
 /**
  * Cashier route
  */
-Route::middleware(['auth:sanctum', 'ability:cashier'])->group(function () {
+Route::middleware(['auth:sanctum', 'ability:cashier,admin'])->group(function () {
+  Route::get('/category', [CashierController::class, 'getCategory']);
+  Route::get('/menu', [CashierController::class, 'getMenu']);
+  Route::get('/logout', [AuthController::class, 'logout']);
+  Route::get('/show-table', [CashierController::class, 'showTable']);
   Route::post('/create-reservation', [CashierController::class, 'createReservation']);
+  Route::post('/create-order', [CashierController::class, 'createOrder']);
 });

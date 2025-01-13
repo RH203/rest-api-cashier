@@ -11,10 +11,9 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('orders_detail', function (Blueprint $table) {
+    Schema::create('orders_details', function (Blueprint $table) {
       $table->id()->autoIncrement()->primary();
       $table->integer('quantity');
-      $table->integer('subtotal');
       $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
       $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
       $table->timestamps();

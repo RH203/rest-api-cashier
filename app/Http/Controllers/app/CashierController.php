@@ -6,11 +6,14 @@ use App\Http\Controllers\base\BaseController;
 use App\Models\Categories;
 use App\Models\Orders;
 use App\Models\OrdersDetail;
+use App\Models\Payments;
 use App\Models\Products;
 use App\Models\Reservations;
 use App\Models\Tables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CashierController extends BaseController
 {
@@ -34,17 +37,26 @@ class CashierController extends BaseController
   public function getMenu()
   {
     try {
+      if (Cache::has('menu')) {
+        $menu = Cache::get('menu');
+        return $this->success($menu);
+      }
+
       $data = Products::with(['category' => function ($query) {
         $query->select('id', 'name');
       }])
         ->select('id', 'name', 'category_id', 'price')
         ->get();
 
+
+      Cache::put('menu', $data, now()->addMinutes(10));
+
       return $this->success($data);
     } catch (\Exception $e) {
       return $this->error($e->getMessage());
     }
   }
+
 
   public function showTable()
   {
@@ -62,6 +74,8 @@ class CashierController extends BaseController
 
       $data = $request->validate([
         'user_id' => 'required|integer',
+        'amount_paid' => 'required|integer',
+        'payment_method' => 'required|string|in:cash,card',
         'items' => 'required|array',
         'items.*.quantity' => 'required|integer|min:1',
         'items.*.product_id' => 'required|integer|exists:products,id',
@@ -89,6 +103,16 @@ class CashierController extends BaseController
 
 
         $order->update(['total_price' => $totalPrice]);
+
+        $payment = Payments::create([
+          'order_id' => $order->id,
+          'amount_paid' => $data['amount_paid'],
+          'payment_method' => $data['payment_method'],
+        ]);
+
+        $changeDue = $payment->amount_paid - $totalPrice;
+
+        $payment->update(['change_due' => $changeDue]);
       });
 
 
